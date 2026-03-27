@@ -47,6 +47,22 @@ class handler(BaseHTTPRequestHandler):
             error_data = {"error": str(e)}
             self.wfile.write(json.dumps(error_data).encode('utf-8'))
 
+    def do_GET(self):
+        # Prevent 501 errors if users visit the API endpoint directly in their browser
+        self.send_response(200)
+        self.send_header('Content-Type', 'text/html; charset=utf-8')
+        self.end_headers()
+        html = """
+        <html>
+            <body style="font-family: sans-serif; text-align: center; margin-top: 50px;">
+                <h1>API d'authentification fonctionnelle !</h1>
+                <p>Cette URL (<code>/api/token</code>) est destinée aux requêtes <b>POST</b>.</p>
+                <p>Pour lancer l'application, veuillez vous rendre sur la <a href="/">page d'accueil principale</a>.</p>
+            </body>
+        </html>
+        """
+        self.wfile.write(html.encode('utf-8'))
+
     def do_OPTIONS(self):
         # Allow CORS for direct testing, though Vercel handles same-domain natively
         self.send_response(200)

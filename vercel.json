@@ -1,6 +1,5 @@
 {
-  "outputDirectory": "frontend",
   "rewrites": [
-    { "source": "/api/token", "destination": "/api" }
+    { "source": "/(.*)", "destination": "/api/index.py" }
   ]
 }
